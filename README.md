@@ -6,7 +6,7 @@
 
 - Prompt for image selection from the camera roll.
 - Save selection as as a jpeg in the current document's directory using the current date as filename.
-- Aappend an incrementing number if multiple images are inserted.
+- Append an incrementing number if multiple images are inserted.
 - Preserve the original image orientation.
 - Insert a markdown image reference.
 
