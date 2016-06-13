@@ -22,7 +22,7 @@ try:
 	exif = dict(img._getexif().items())
 	rot_degrees = {3: 180, 6: 270, 8: 90}.get(exif[orientation], 0)
 	if rot_degrees:
-		img = image.rotate(rot_degrees, expand=True)
+		img = img.rotate(rot_degrees, expand=True)
 # cases: image don't have getexif
 except (AttributeError, KeyError, IndexError):
 	pass
