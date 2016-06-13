@@ -16,30 +16,26 @@ if not img:
 	workflow.stop()
 
 try:
-	for orientation in ExifTags.TAGS.keys():
-		if ExifTags.TAGS[orientation]=='Orientation':
-      break
-	exif=dict(img._getexif().items())
-
-	if exif[orientation] == 3:
-		img=image.rotate(180, expand=True)
-	elif exif[orientation] == 6:
-		img=img.rotate(270, expand=True)
-	elif exif[orientation] == 8:
-		img=image.rotate(90, expand=True)
+	for orientation, value in ExifTags.TAGS.items():
+		if value == 'Orientation':
+			break
+	exif = dict(img._getexif().items())
+	rot_degrees = {3: 180, 6: 270, 8: 90}.get(exif[orientation], 0)
+	if rot_degrees:
+		img = image.rotate(rot_degrees, expand=True)
 # cases: image don't have getexif
 except (AttributeError, KeyError, IndexError):
 	pass
 
 doc_path = editor.get_path()
 doc_dir, fn = os.path.split(doc_path)
-default_name = '%s' % timestr + '_' + 'image'
+default_name = '{}_image'.format(timestr)
 
 i = 1
 while True:
 	if not os.path.exists(os.path.join(doc_dir, default_name + '.jpg')):
 		break
-	default_name = '%s' % timestr + '_' + 'image' + '_' + str(i)
+	default_name = '{}_image_{}'.format(timestr, i)
 	i += 1
 
 root, rel_doc_path = editor.to_relative_path(editor.get_path())
